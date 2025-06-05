@@ -2,6 +2,26 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertUserSchema, loginSchema, insertAppointmentSchema, insertReviewSchema } from "@shared/schema";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'changeme';
+
+function generateToken(user) {
+  return jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+}
+
+function authMiddleware(req, res, next) {
+  const auth = req.headers.authorization;
+  if (!auth || !auth.startsWith('Bearer ')) return res.status(401).json({ message: 'No token' });
+  try {
+    const decoded = jwt.verify(auth.replace('Bearer ', ''), JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
@@ -10,10 +30,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { email, password } = loginSchema.parse(req.body);
       const user = await storage.getUserByEmail(email);
       
-      if (!user || user.password !== password) {
+      if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
       
+      const token = generateToken(user);
       res.json({ 
         user: { 
           id: user.id, 
@@ -22,7 +43,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           email: user.email, 
           role: user.role,
           profileImageUrl: user.profileImageUrl 
-        } 
+        },
+        token
       });
     } catch (error) {
       res.status(400).json({ message: "Invalid request data" });
@@ -39,7 +61,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(409).json({ message: "User already exists" });
       }
       
-      const user = await storage.createUser(userData);
+      const hashed = await bcrypt.hash(userData.password, 10);
+      const user = await storage.createUser({ ...userData, password: hashed });
+      const token = generateToken(user);
       res.status(201).json({ 
         user: { 
           id: user.id, 
@@ -48,7 +72,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           email: user.email, 
           role: user.role,
           profileImageUrl: user.profileImageUrl 
-        } 
+        },
+        token
       });
     } catch (error) {
       res.status(400).json({ message: "Invalid request data" });

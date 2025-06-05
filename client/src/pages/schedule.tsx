@@ -18,10 +18,10 @@ interface ScheduleProps {
 }
 
 const steps = [
-  { id: 1, name: "Service", label: "Choose Service" },
-  { id: 2, name: "Barber", label: "Select Barber" },
-  { id: 3, name: "DateTime", label: "Pick Date & Time" },
-  { id: 4, name: "Confirm", label: "Confirm Booking" },
+  { id: 1, name: "Service", label: "Escolha o Serviço" },
+  { id: 2, name: "Barber", label: "Selecione o Barbeiro" },
+  { id: 3, name: "DateTime", label: "Escolha Data e Hora" },
+  { id: 4, name: "Confirm", label: "Confirme o Agendamento" },
 ];
 
 const timeSlots = [
@@ -41,11 +41,11 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: services = [] } = useQuery({
+  const { data: services = [] } = useQuery<Service[]>({
     queryKey: ["/api/services"],
   });
 
-  const { data: barbers = [] } = useQuery({
+  const { data: barbers = [] } = useQuery<BarberWithUser[]>({
     queryKey: ["/api/barbers"],
   });
 
@@ -174,8 +174,8 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
             transition={{ duration: 0.3 }}
           >
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Choose Your Service</h2>
-              <p className="text-muted-foreground">Select the service you'd like to book</p>
+              <h2 className="text-3xl font-bold mb-4">Escolha seu Serviço</h2>
+              <p className="text-muted-foreground">Selecione o serviço que deseja agendar</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -192,12 +192,12 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-xl font-semibold">{service.name}</h3>
-                      <Badge variant="secondary">${service.price}</Badge>
+                      <Badge variant="secondary">R$ {(typeof service.price === 'number' ? service.price : Number(service.price)).toFixed(2)}</Badge>
                     </div>
                     <p className="text-muted-foreground mb-4">{service.description}</p>
                     <div className="flex items-center text-sm text-muted-foreground">
                       <Clock className="w-4 h-4 mr-2" />
-                      {service.duration} minutes
+                      {service.duration} min
                     </div>
                   </CardContent>
                 </Card>
@@ -216,8 +216,8 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
             transition={{ duration: 0.3 }}
           >
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Choose Your Barber</h2>
-              <p className="text-muted-foreground">Select your preferred barber</p>
+              <h2 className="text-3xl font-bold mb-4">Escolha o Barbeiro</h2>
+              <p className="text-muted-foreground">Selecione seu barbeiro preferido</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -253,11 +253,11 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
                         ))}
                       </div>
                       <span className="text-sm text-muted-foreground ml-1">
-                        {barber.rating} ({barber.reviewCount} reviews)
+                        {barber.rating} ({barber.reviewCount} avaliações)
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      {barber.experience} years experience
+                      {barber.experience} anos de experiência
                     </p>
                   </CardContent>
                 </Card>
@@ -267,7 +267,7 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
             <div className="mt-8 flex justify-between">
               <Button variant="outline" onClick={previousStep}>
                 <ChevronLeft className="w-4 h-4 mr-2" />
-                Previous
+                Anterior
               </Button>
             </div>
           </motion.div>
@@ -283,15 +283,15 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
             transition={{ duration: 0.3 }}
           >
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Select Date & Time</h2>
-              <p className="text-muted-foreground">Choose your preferred appointment time</p>
+              <h2 className="text-3xl font-bold mb-4">Escolha Data e Hora</h2>
+              <p className="text-muted-foreground">Escolha o melhor horário para seu atendimento</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Calendar */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Select Date</CardTitle>
+                  <CardTitle>Selecione a Data</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Calendar
@@ -307,7 +307,7 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
               {/* Time Slots */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Available Times</CardTitle>
+                  <CardTitle>Horários Disponíveis</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-3">
@@ -330,14 +330,14 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
             <div className="mt-8 flex justify-between">
               <Button variant="outline" onClick={previousStep}>
                 <ChevronLeft className="w-4 h-4 mr-2" />
-                Previous
+                Anterior
               </Button>
               <Button
                 onClick={nextStep}
                 disabled={!selectedDate || !selectedTime}
                 className="bg-primary hover:bg-primary/90"
               >
-                Next
+                Próximo
                 <ChevronRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
@@ -354,27 +354,27 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
             transition={{ duration: 0.3 }}
           >
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Confirm Your Appointment</h2>
-              <p className="text-muted-foreground">Please review your booking details</p>
+              <h2 className="text-3xl font-bold mb-4">Confirme seu Agendamento</h2>
+              <p className="text-muted-foreground">Confira os detalhes do seu agendamento</p>
             </div>
 
-            <Card className="max-w-2xl mx-auto">
+            <Card>
               <CardContent className="p-8">
                 <div className="space-y-6">
                   <div className="flex justify-between items-center py-4 border-b">
-                    <span className="font-medium text-muted-foreground">Service:</span>
+                    <span className="font-medium text-muted-foreground">Serviço:</span>
                     <span className="font-semibold">{selectedService?.name}</span>
                   </div>
                   <div className="flex justify-between items-center py-4 border-b">
-                    <span className="font-medium text-muted-foreground">Barber:</span>
+                    <span className="font-medium text-muted-foreground">Barbeiro:</span>
                     <span className="font-semibold">
                       {selectedBarber?.user.firstName} {selectedBarber?.user.lastName}
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-4 border-b">
-                    <span className="font-medium text-muted-foreground">Date:</span>
+                    <span className="font-medium text-muted-foreground">Data:</span>
                     <span className="font-semibold">
-                      {selectedDate?.toLocaleDateString("en-US", {
+                      {selectedDate?.toLocaleDateString("pt-BR", {
                         weekday: "long",
                         year: "numeric",
                         month: "long",
@@ -383,17 +383,17 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-4 border-b">
-                    <span className="font-medium text-muted-foreground">Time:</span>
+                    <span className="font-medium text-muted-foreground">Horário:</span>
                     <span className="font-semibold">{selectedTime}</span>
                   </div>
                   <div className="flex justify-between items-center py-4 border-b">
-                    <span className="font-medium text-muted-foreground">Duration:</span>
-                    <span className="font-semibold">{selectedService?.duration} minutes</span>
+                    <span className="font-medium text-muted-foreground">Duração:</span>
+                    <span className="font-semibold">{selectedService?.duration} min</span>
                   </div>
                   <div className="flex justify-between items-center py-4">
-                    <span className="font-medium text-muted-foreground">Total Price:</span>
+                    <span className="font-medium text-muted-foreground">Valor Total:</span>
                     <span className="text-2xl font-bold text-primary">
-                      ${selectedService?.price}
+                      R$ {(typeof selectedService?.price === 'number' ? selectedService?.price : Number(selectedService?.price)).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -401,14 +401,14 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
                 <div className="mt-8 flex justify-between">
                   <Button variant="outline" onClick={previousStep}>
                     <ChevronLeft className="w-4 h-4 mr-2" />
-                    Previous
+                    Anterior
                   </Button>
                   <Button
                     onClick={confirmBooking}
                     disabled={createAppointmentMutation.isPending}
                     className="bg-secondary hover:bg-secondary/90"
                   >
-                    {createAppointmentMutation.isPending ? "Booking..." : "Confirm Booking"}
+                    {createAppointmentMutation.isPending ? "Agendando..." : "Confirmar Agendamento"}
                   </Button>
                 </div>
               </CardContent>
@@ -429,11 +429,11 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
         customerName={user ? `${user.firstName} ${user.lastName}` : ""}
         appointmentDetails={
           selectedDate && selectedTime
-            ? `${selectedDate.toLocaleDateString("en-US", {
+            ? `${selectedDate.toLocaleDateString("pt-BR", {
                 weekday: "long",
                 month: "long",
                 day: "numeric",
-              })} at ${selectedTime}`
+              })} às ${selectedTime}`
             : ""
         }
       />

@@ -38,15 +38,15 @@ export default function Auth({ onSuccess }: AuthProps) {
       login(data.user);
       
       toast({
-        title: "Welcome back!",
-        description: "You have successfully logged in.",
+        title: "Bem-vindo de volta!",
+        description: "Você fez login com sucesso.",
       });
       
       onSuccess();
     } catch (error) {
       toast({
-        title: "Login failed",
-        description: "Invalid email or password. Please try again.",
+        title: "Login falhou",
+        description: "Email ou senha inválidos. Por favor, tente novamente.",
         variant: "destructive",
       });
     } finally {
@@ -77,15 +77,15 @@ export default function Auth({ onSuccess }: AuthProps) {
       login(data.user);
       
       toast({
-        title: "Account created!",
-        description: "Welcome to BarberPro. Your account has been created successfully.",
+        title: "Conta criada!",
+        description: "Bem-vindo ao BarberPro. Sua conta foi criada com sucesso.",
       });
       
       onSuccess();
     } catch (error) {
       toast({
-        title: "Registration failed",
-        description: "Unable to create account. Please try again.",
+        title: "Registro falhou",
+        description: "Não foi possível criar a conta. Por favor, tente novamente.",
         variant: "destructive",
       });
     } finally {
@@ -119,7 +119,7 @@ export default function Auth({ onSuccess }: AuthProps) {
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder="Digite seu email"
                         className="pl-10"
                         required
                       />
@@ -127,14 +127,14 @@ export default function Auth({ onSuccess }: AuthProps) {
                   </div>
 
                   <div>
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Senha</Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                       <Input
                         id="password"
                         name="password"
                         type={showPassword ? "text" : "password"}
-                        placeholder="Enter your password"
+                        placeholder="Digite sua senha"
                         className="pl-10 pr-10"
                         required
                       />
@@ -153,13 +153,13 @@ export default function Auth({ onSuccess }: AuthProps) {
                     className="w-full bg-primary hover:bg-primary/90"
                     disabled={loading}
                   >
-                    {loading ? "Signing in..." : "Login"}
+                    {loading ? "Entrando..." : "Entrar"}
                   </Button>
                 </form>
 
                 <div className="text-center">
                   <a href="#" className="text-sm text-primary hover:underline">
-                    Forgot your password?
+                    Esqueceu sua senha?
                   </a>
                 </div>
               </TabsContent>
@@ -168,7 +168,7 @@ export default function Auth({ onSuccess }: AuthProps) {
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="firstName">First Name</Label>
+                      <Label htmlFor="firstName">Nome</Label>
                       <div className="relative">
                         <User className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                         <Input
@@ -182,7 +182,7 @@ export default function Auth({ onSuccess }: AuthProps) {
                       </div>
                     </div>
                     <div>
-                      <Label htmlFor="lastName">Last Name</Label>
+                      <Label htmlFor="lastName">Sobrenome</Label>
                       <Input
                         id="lastName"
                         name="lastName"
@@ -209,14 +209,14 @@ export default function Auth({ onSuccess }: AuthProps) {
                   </div>
 
                   <div>
-                    <Label htmlFor="registerPassword">Password</Label>
+                    <Label htmlFor="registerPassword">Senha</Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                       <Input
                         id="registerPassword"
                         name="password"
                         type={showPassword ? "text" : "password"}
-                        placeholder="Create a password"
+                        placeholder="Crie uma senha"
                         className="pl-10 pr-10"
                         required
                         minLength={6}
@@ -236,14 +236,14 @@ export default function Auth({ onSuccess }: AuthProps) {
                     className="w-full bg-secondary hover:bg-secondary/90"
                     disabled={loading}
                   >
-                    {loading ? "Creating account..." : "Create Account"}
+                    {loading ? "Criando conta..." : "Criar Conta"}
                   </Button>
                 </form>
 
                 <div className="text-center text-sm text-muted-foreground">
-                  By signing up, you agree to our{" "}
+                  Ao se registrar, você concorda com nossos{" "}
                   <a href="#" className="text-primary hover:underline">
-                    Terms & Conditions
+                    Termos & Condições
                   </a>
                 </div>
               </TabsContent>

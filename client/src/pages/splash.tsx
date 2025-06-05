@@ -44,7 +44,7 @@ export default function Splash({ onGetStarted }: SplashProps) {
           transition={{ delay: 0.5, duration: 0.5 }}
           className="text-xl text-blue-100 mb-8"
         >
-          "Easy scheduling, perfect haircut."
+          "Agendamento fácil, corte perfeito."
         </motion.p>
         
         <motion.div
@@ -56,7 +56,7 @@ export default function Splash({ onGetStarted }: SplashProps) {
             onClick={onGetStarted}
             className="bg-white text-primary px-8 py-3 text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl"
           >
-            Get Started
+            Começar
           </Button>
         </motion.div>
       </div>

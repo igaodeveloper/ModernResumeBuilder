@@ -12,7 +12,7 @@ import { AppointmentWithDetails } from "@shared/schema";
 export default function Profile() {
   const { user } = useAuth();
 
-  const { data: appointments = [], isLoading } = useQuery({
+  const { data: appointments = [], isLoading } = useQuery<AppointmentWithDetails[]>({
     queryKey: [`/api/users/${user?.id}/appointments`],
     enabled: !!user?.id,
   });
@@ -21,7 +21,7 @@ export default function Profile() {
     id: apt.id.toString(),
     title: apt.service.name,
     description: `with ${apt.barber.user.firstName} ${apt.barber.user.lastName}`,
-    date: new Date(apt.appointmentDate).toLocaleDateString("en-US", {
+    date: new Date(apt.appointmentDate).toLocaleDateString("pt-BR", {
       year: "numeric",
       month: "long", 
       day: "numeric",

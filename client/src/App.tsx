@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Switch, Route, useLocation } from "wouter";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
@@ -11,20 +11,18 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/useAuth";
 import { Bell, Home, Scissors, Calendar, User, Menu, Plus, LogOut } from "lucide-react";
-
-// Pages
-import Splash from "@/pages/splash";
+import { AnimatePresence, motion } from "framer-motion";
+import AdminRoutes from "@/routes/AdminRoutes";
+import ClienteRoutes from "@/routes/ClienteRoutes";
 import Auth from "@/pages/auth";
-import Dashboard from "@/pages/dashboard";
-import Services from "@/pages/services";
-import Schedule from "@/pages/schedule";
-import Profile from "@/pages/profile";
+import Splash from "@/pages/splash";
 import NotFound from "@/pages/not-found";
 
 type AppState = "splash" | "auth" | "main";
 
 function Navigation() {
-  const [location, setLocation] = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   const navItems = [
@@ -34,7 +32,7 @@ function Navigation() {
     { path: "/profile", icon: User, label: "Profile" },
   ];
 
-  const currentPath = location;
+  const currentPath = location.pathname;
 
   return (
     <>
@@ -56,7 +54,7 @@ function Navigation() {
                 return (
                   <button
                     key={item.path}
-                    onClick={() => setLocation(item.path)}
+                    onClick={() => navigate(item.path)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                       isActive
                         ? "text-primary bg-primary/10"
@@ -115,7 +113,7 @@ function Navigation() {
             return (
               <button
                 key={item.path}
-                onClick={() => setLocation(item.path)}
+                onClick={() => navigate(item.path)}
                 className={`flex flex-col items-center py-2 px-3 transition-colors ${
                   isActive ? "text-primary" : "text-muted-foreground"
                 }`}
@@ -131,94 +129,40 @@ function Navigation() {
   );
 }
 
-function Router() {
-  const [appState, setAppState] = useState<AppState>("splash");
-  const [selectedServiceId, setSelectedServiceId] = useState<number | undefined>();
+function ProtectedRoute({ role, children }: { role?: string; children?: React.ReactNode }) {
   const { isAuthenticated, user } = useAuth();
-  const [, setLocation] = useLocation();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (role && user?.role !== role) return <Navigate to={user?.role === "admin" ? "/admin/dashboard" : "/cliente/home"} replace />;
+  return children ? children : <Outlet />;
+}
 
-  useEffect(() => {
-    if (isAuthenticated && appState !== "main") {
-      setAppState("main");
-    }
-  }, [isAuthenticated, appState]);
-
-  const handleSplashComplete = () => {
-    setAppState("auth");
-  };
-
-  const handleAuthSuccess = () => {
-    setAppState("main");
-    setLocation("/");
-  };
-
-  const handleScheduleService = (serviceId?: number) => {
-    setSelectedServiceId(serviceId);
-    setLocation("/schedule");
-  };
-
-  const handleScheduleSuccess = () => {
-    setSelectedServiceId(undefined);
-    setLocation("/");
-  };
-
-  if (appState === "splash") {
-    return <Splash onGetStarted={handleSplashComplete} />;
-  }
-
-  if (appState === "auth" || !isAuthenticated) {
-    return <Auth onSuccess={handleAuthSuccess} />;
-  }
-
+function AppRouter() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <main className="pb-20 md:pb-0">
-        <Switch>
-          <Route path="/">
-            <Dashboard onSchedule={() => handleScheduleService()} />
-          </Route>
-          <Route path="/services">
-            <Services onBookService={handleScheduleService} />
-          </Route>
-          <Route path="/schedule">
-            <Schedule 
-              selectedServiceId={selectedServiceId}
-              onSuccess={handleScheduleSuccess}
-            />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route component={NotFound} />
-        </Switch>
-      </main>
-
-      {/* Floating Action Button */}
-      <FloatingActionButton 
-        onClick={() => handleScheduleService()}
-        className="bg-secondary hover:bg-secondary/90"
-      >
-        <Plus className="w-8 h-8" />
-      </FloatingActionButton>
-
-      {/* WhatsApp Button */}
-      <WhatsAppButton 
-        customerName={user ? `${user.firstName} ${user.lastName}` : ""}
-      />
-    </div>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/login" element={<Auth onSuccess={() => navigate(user?.role === "admin" ? "/admin/dashboard" : "/cliente/home")} />} />
+        <Route path="/admin/*" element={<ProtectedRoute role="admin"><AdminRoutes /></ProtectedRoute>} />
+        <Route path="/cliente/*" element={<ProtectedRoute role="cliente"><ClienteRoutes /></ProtectedRoute>} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AnimatePresence>
   );
 }
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Router />
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <Router>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <AppRouter />
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </Router>
   );
 }
 

@@ -14,11 +14,11 @@ interface ServicesProps {
 }
 
 const categories = [
-  { id: "all", label: "All Services" },
-  { id: "haircuts", label: "Haircuts" },
-  { id: "beard-care", label: "Beard Care" },
-  { id: "packages", label: "Packages" },
-  { id: "styling", label: "Styling" },
+  { id: "all", label: "Todos os Serviços" },
+  { id: "haircuts", label: "Cortes de Cabelo" },
+  { id: "beard-care", label: "Cuidados com a Barba" },
+  { id: "packages", label: "Pacotes" },
+  { id: "styling", label: "Estilização" },
 ];
 
 export default function Services({ onBookService }: ServicesProps) {
@@ -68,9 +68,9 @@ export default function Services({ onBookService }: ServicesProps) {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-8"
       >
-        <h1 className="text-4xl font-bold text-foreground mb-4">Our Services</h1>
+        <h1 className="text-4xl font-bold text-foreground mb-4">Nossos Serviços</h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Professional grooming services tailored to your style
+          Serviços profissionais de barbearia feitos para o seu estilo
         </p>
       </motion.div>
 
@@ -121,7 +121,7 @@ export default function Services({ onBookService }: ServicesProps) {
                   variant="secondary"
                   className="absolute top-4 right-4 bg-primary text-primary-foreground"
                 >
-                  ${service.price}
+                  R$ {(typeof service.price === 'number' ? service.price : Number(service.price)).toFixed(2)}
                 </Badge>
               </div>
               
@@ -144,13 +144,14 @@ export default function Services({ onBookService }: ServicesProps) {
                       onClick={() => onBookService(service.id)}
                       className="bg-primary hover:bg-primary/90"
                     >
-                      Book Now
+                      Agendar
                     </Button>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => {
-                        const message = `Hello! I'd like to book a ${service.name} at BarberPro. Service: ${service.name} (${service.duration} min) - R$ ${service.price}`;
+                        const price = typeof service.price === 'number' ? service.price : Number(service.price);
+                        const message = `Olá! Gostaria de agendar um(a) ${service.name} na BarberPro. Serviço: ${service.name} (${service.duration} min) - R$ ${price.toFixed(2)}`;
                         const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
                         window.open(whatsappUrl, '_blank');
                       }}
@@ -173,7 +174,7 @@ export default function Services({ onBookService }: ServicesProps) {
           className="text-center py-12"
         >
           <p className="text-muted-foreground text-lg">
-            No services found in this category.
+            Nenhum serviço encontrado nesta categoria.
           </p>
         </motion.div>
       )}

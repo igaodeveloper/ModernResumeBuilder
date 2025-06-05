@@ -22,7 +22,7 @@ interface DashboardProps {
 export default function Dashboard({ onSchedule }: DashboardProps) {
   const { user } = useAuth();
 
-  const { data: appointments = [], isLoading } = useQuery({
+  const { data: appointments = [], isLoading } = useQuery<AppointmentWithDetails[]>({
     queryKey: [`/api/users/${user?.id}/appointments`],
     enabled: !!user?.id,
   });
@@ -33,13 +33,13 @@ export default function Dashboard({ onSchedule }: DashboardProps) {
   );
 
   const recentAppointments = appointments
-    .filter((apt: AppointmentWithDetails) => apt.status === "completed")
+    .filter((apt) => apt.status === "completed")
     .slice(0, 3)
-    .map((apt: AppointmentWithDetails) => ({
+    .map((apt) => ({
       id: apt.id.toString(),
       title: `${apt.service.name}`,
-      description: `with ${apt.barber.user.firstName} ${apt.barber.user.lastName}`,
-      date: new Date(apt.appointmentDate).toLocaleDateString("en-US", {
+      description: `com ${apt.barber.user.firstName} ${apt.barber.user.lastName}`,
+      date: new Date(apt.appointmentDate).toLocaleDateString("pt-BR", {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -73,9 +73,10 @@ export default function Dashboard({ onSchedule }: DashboardProps) {
         className="mb-8"
       >
         <h1 className="text-3xl font-bold text-foreground mb-2">
-          Welcome back, {user?.firstName}! 👋
+          Bem-vindo de volta, {user?.firstName}! 👋
         </h1>
         <p className="text-muted-foreground">Ready for your next great haircut?</p>
+        <p className="text-muted-foreground">Pronto para o seu próximo grande corte?</p>
       </motion.div>
 
       {/* Quick Stats Cards */}
@@ -88,41 +89,41 @@ export default function Dashboard({ onSchedule }: DashboardProps) {
         >
           <Card className="card-hover border-l-4 border-l-primary">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg">Next Appointment</CardTitle>
+              <CardTitle className="text-lg">Próximo Agendamento</CardTitle>
               <Calendar className="h-8 w-8 text-primary bg-primary/10 rounded-lg p-1.5" />
             </CardHeader>
             <CardContent>
               {nextAppointment ? (
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">
-                    {new Date(nextAppointment.appointmentDate).toLocaleDateString("en-US", {
+                    {new Date(nextAppointment.appointmentDate).toLocaleDateString("pt-BR", {
                       weekday: "long",
                       month: "long",
                       day: "numeric",
                     })}{" "}
-                    at{" "}
-                    {new Date(nextAppointment.appointmentDate).toLocaleTimeString("en-US", {
+                    às{" "}
+                    {new Date(nextAppointment.appointmentDate).toLocaleTimeString("pt-BR", {
                       hour: "numeric",
                       minute: "2-digit",
                     })}
                   </p>
                   <p className="font-medium">{nextAppointment.service.name}</p>
                   <p className="text-sm text-muted-foreground">
-                    with {nextAppointment.barber.user.firstName} {nextAppointment.barber.user.lastName}
+                    com {nextAppointment.barber.user.firstName} {nextAppointment.barber.user.lastName}
                   </p>
                   <Button variant="link" className="p-0 h-auto text-primary">
-                    View Details
+                    Ver Detalhes
                   </Button>
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">No upcoming appointments</p>
+                  <p className="text-sm text-muted-foreground">Nenhum agendamento futuro</p>
                   <Button
                     onClick={onSchedule}
                     variant="link"
                     className="p-0 h-auto text-primary"
                   >
-                    Schedule Now
+                    Agendar Agora
                   </Button>
                 </div>
               )}
@@ -138,18 +139,18 @@ export default function Dashboard({ onSchedule }: DashboardProps) {
         >
           <Card className="card-hover border-l-4 border-l-secondary">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg">Recommended</CardTitle>
+              <CardTitle className="text-lg">Recomendado</CardTitle>
               <Star className="h-8 w-8 text-secondary bg-secondary/10 rounded-lg p-1.5" />
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <p className="font-medium">Deluxe Grooming Package</p>
+                <p className="font-medium">Pacote Deluxe de Barbearia</p>
                 <p className="text-sm text-muted-foreground">
-                  Cut + Beard + Wash + Style
+                  Corte + Barba + Lavar + Estilizar
                 </p>
-                <p className="text-2xl font-bold text-secondary">$65</p>
+                <p className="text-2xl font-bold text-secondary">R$ 65,00</p>
                 <Button variant="link" className="p-0 h-auto text-secondary">
-                  Learn More
+                  Saiba Mais
                 </Button>
               </div>
             </CardContent>
@@ -164,15 +165,15 @@ export default function Dashboard({ onSchedule }: DashboardProps) {
         >
           <Card className="card-hover border-l-4 border-l-accent">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg">Your Stats</CardTitle>
+              <CardTitle className="text-lg">Suas Estatísticas</CardTitle>
               <TrendingUp className="h-8 w-8 text-accent bg-accent/10 rounded-lg p-1.5" />
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">
-                  Member since {user?.createdAt ? new Date().getFullYear() : "2023"}
+                  Membro desde {user && 'createdAt' in user && (typeof user.createdAt === 'string' || typeof user.createdAt === 'number') ? new Date(user.createdAt).getFullYear() : "2023"}
                 </p>
-                <p className="font-medium">{appointments.length} Total Visits</p>
+                <p className="font-medium">{appointments.length} Visitas Totais</p>
                 <div className="flex space-x-1">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -184,7 +185,7 @@ export default function Dashboard({ onSchedule }: DashboardProps) {
                   ))}
                 </div>
                 <Button variant="link" className="p-0 h-auto text-accent">
-                  View Profile
+                  Ver Perfil
                 </Button>
               </div>
             </CardContent>
