@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Clock } from "lucide-react";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { Clock, MessageCircle } from "lucide-react";
 import { Service } from "@shared/schema";
+import { useAuth } from "@/hooks/useAuth";
 
 interface ServicesProps {
   onBookService: (serviceId: number) => void;
@@ -21,6 +23,7 @@ const categories = [
 
 export default function Services({ onBookService }: ServicesProps) {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const { user } = useAuth();
 
   const { data: services = [], isLoading } = useQuery({
     queryKey: ["/api/services", selectedCategory !== "all" ? selectedCategory : null],
@@ -136,12 +139,26 @@ export default function Services({ onBookService }: ServicesProps) {
                     <Clock className="h-4 w-4" />
                     {service.duration} min
                   </div>
-                  <Button
-                    onClick={() => onBookService(service.id)}
-                    className="bg-primary hover:bg-primary/90"
-                  >
-                    Book Now
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={() => onBookService(service.id)}
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      Book Now
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const message = `Hello! I'd like to book a ${service.name} at BarberPro. Service: ${service.name} (${service.duration} min) - R$ ${service.price}`;
+                        const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
+                        window.open(whatsappUrl, '_blank');
+                      }}
+                      className="p-2"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

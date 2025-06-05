@@ -416,6 +416,27 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* QR Payment Modal */}
+      <QRPaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => {
+          setShowPaymentModal(false);
+          onSuccess();
+        }}
+        amount={selectedService?.price || "0"}
+        serviceName={selectedService?.name || ""}
+        customerName={user ? `${user.firstName} ${user.lastName}` : ""}
+        appointmentDetails={
+          selectedDate && selectedTime
+            ? `${selectedDate.toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+              })} at ${selectedTime}`
+            : ""
+        }
+      />
     </div>
   );
 }
