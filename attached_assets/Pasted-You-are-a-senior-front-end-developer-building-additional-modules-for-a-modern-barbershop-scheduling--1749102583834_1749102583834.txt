@@ -1,0 +1,153 @@
+You are a senior front-end developer building additional modules for a modern barbershop scheduling platform called **BarberPro**, using React.js. Implement the following **innovative and intelligent features** in a modular, responsive, animated, and scalable way. Maintain full compatibility with the existing BarberPro architecture, visual identity, and UX standards.
+
+All UI/UX must follow the BarberPro design system: red, blue, white (barber pole colors), rounded components, interactive animations (Framer Motion), and mobile-first responsive design.
+
+---
+
+🚀 OBJECTIVE: Add the following **innovative, high-end functionalities** to enhance user experience, retention, and customer satisfaction.
+
+---
+
+### 1. 📍 Smart Geolocation Reminder
+
+- Use browser geolocation to track user proximity to the barbershop (optional consent).
+- If appointment is within 30–60 mins and the client is within X meters, show a smart popup:
+  - “You’re just 500m away from BarberPro. Your cut is almost ready!”
+- Trigger as push notification (if allowed) or toast modal with animation.
+
+---
+
+### 2. 💬 Real-Time Chat with Barber
+
+- On appointment confirmation, show a chat button on dashboard.
+- Chat interface (WhatsApp-style) where user can:
+  - Send text messages
+  - Upload images (style references)
+  - View barber’s status (online/offline)
+- Placeholder for real-time communication (use mock data or simulate).
+
+---
+
+### 3. 🤖 AI Haircut Style Preview
+
+- Upload a selfie and select haircut styles.
+- Show a mockup preview of the customer with the new style.
+- Use a simulated image overlay component (no real AI needed at this stage).
+- Options: “Low fade”, “Buzz cut”, “Classic comb over”, etc.
+
+---
+
+### 4. 🔁 1-Click Rebook Last Appointment
+
+- On dashboard, show a prominent button:
+  - “Repeat Last Appointment”
+  - Prefills last service, barber, day/time
+  - Confirmation modal → Done
+
+---
+
+### 5. 🎯 Smart Suggestions (Personalized AI)
+
+- Analyze booking history and popular services.
+- Suggest:
+  - “Your favorite cut is available today at 3 PM.”
+  - “João, your usual barber, has a spot tomorrow morning.”
+- Auto-update dashboard with animated recommendation cards.
+
+---
+
+### 6. 🧴 Integrated Shop for Hair Products
+
+- Add “Products” tab or section on dashboard.
+- Grid of items (pomade, shampoo, beard oil) with:
+  - Name, price, image, “Add to Cart”
+- Confirmation popup → delivery or pickup
+- Show suggestions post-appointment: “Recommended for your haircut”
+
+---
+
+### 7. 💰 Wallet + Cashback BarberPro
+
+- Show a Wallet screen with available credit.
+- Each Pix payment gives cashback (ex: R$5.00 back).
+- “Use credit in next booking” toggle on payment screen.
+- Animation when earning cashback: confetti or coin effect.
+
+---
+
+### 8. ⭐ Barber Ranking + Gamification
+
+- Leaderboard UI showing top-rated barbers:
+  - “Top 3 of the Week”
+  - Medals/badges for:
+    - Fastest service
+    - Best reviewed
+    - Most bookings
+- Display in barber profile and client dashboard.
+
+---
+
+### 9. 📅 Sync with Google Calendar / Apple Calendar
+
+- Add a button after booking:
+  - “Add to Google Calendar”
+  - “Add to Apple Calendar”
+- Autofill: date, time, address, notes.
+- Use iCal or deep link generation.
+
+---
+
+### 10. 🔐 QR Code Check-In
+
+- On arrival at the barbershop, client scans a QR code.
+- Dashboard should show a “Check-In” status automatically.
+- Trigger confirmation toast and notify barber (simulated).
+
+---
+
+### 11. 📸 Selfie After Cut + Social Share
+
+- After the service, client can take a selfie (with permission).
+- App adds watermark: “Styled by BarberPro 💈”
+- Buttons: Share on Instagram, WhatsApp, Facebook
+- Option to download photo with frame.
+
+---
+
+### 12. 😊 Emoji-Based Feedback
+
+- Simple feedback modal after every appointment:
+  - Emoji rating: 😍 😐 😠
+  - Optional comment
+- Animated emojis and visual confirmation.
+- Score saved to barber’s rating profile.
+
+---
+
+🎨 UI/UX GUIDELINES:
+
+- All components must match BarberPro brand: blue/red/white colors, rounded elements, shadowed cards.
+- Use Framer Motion for smooth entrance/exit animations.
+- Components must be modular and reusable.
+- All text must be in Brazilian Portuguese (`pt-BR`) for user-facing components.
+
+---
+
+📁 FILE/COMPONENT STRUCTURE SUGGESTION:
+
+- `/components/SmartReminder.js`
+- `/components/ChatWithBarber.js`
+- `/components/AIHaircutPreview.js`
+- `/components/RebookButton.js`
+- `/components/SmartSuggestions.js`
+- `/components/Shop.js`
+- `/components/Wallet.js`
+- `/components/Ranking.js`
+- `/components/CalendarSync.js`
+- `/components/QRCodeCheckIn.js`
+- `/components/SelfieShare.js`
+- `/components/EmojiFeedback.js`
+
+---
+
+🔁 GOAL: Integrate all features smoothly into the existing BarberPro system, fully localized in pt-BR, with a modern, polished, animated, and professional look.

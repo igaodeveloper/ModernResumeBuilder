@@ -1,12 +1,19 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, Star, TrendingUp, CheckCircle, BookOpen } from "lucide-react";
+import { Calendar, Clock, Star, TrendingUp, CheckCircle, BookOpen, MessageCircle, Sparkles } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Timeline } from "@/components/ui/timeline";
-import { AppointmentWithDetails } from "@shared/schema";
+import { SmartReminder } from "@/components/SmartReminder";
+import { ChatWithBarber } from "@/components/ChatWithBarber";
+import { AIHaircutPreview } from "@/components/AIHaircutPreview";
+import { RebookButton } from "@/components/RebookButton";
+import { SmartSuggestions } from "@/components/SmartSuggestions";
+import { EmojiFeedback } from "@/components/EmojiFeedback";
+import { AppointmentWithDetails, Service, BarberWithUser } from "@shared/schema";
 
 interface DashboardProps {
   onSchedule: () => void;
