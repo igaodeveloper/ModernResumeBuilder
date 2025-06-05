@@ -1,0 +1,158 @@
+You are a senior front-end developer. Build the entire front-end for a modern, professional and complete barbershop scheduling system called **BarberPro**, using **React.js** (SPA architecture with React Router). This project must have a premium UI/UX with elegant visuals, responsive layout, component-based structure, and smooth animations.
+
+Use the visual identity of the classic **barber pole**: red, blue, and white colors. Focus on elegance, clarity, and professional layout for both customers and barbers.
+
+---
+
+🔷 PROJECT OVERVIEW:
+
+Name: BarberPro  
+Slogan: “Easy scheduling, perfect haircut.”  
+Tech stack: React.js SPA + Tailwind CSS or Styled Components  
+Fonts: “Poppins” or “Montserrat”  
+Icons: Heroicons or Phosphor Icons  
+Animations: Framer Motion or React Spring  
+Routing: React Router DOM  
+Responsive: Mobile-first design (desktop + tablet support)
+
+---
+
+🎨 COLOR PALETTE (Barber Pole Inspired):
+
+- Primary Blue: #1B3D6D  
+- Secondary Red: #C62828  
+- Accent Blue: #2196F3  
+- Accent Red: #E53935  
+- Background White: #FAFAFA  
+- Text Dark: #212121  
+
+All components should follow these colors with visual hierarchy, shadows, rounded corners, and spacing.
+
+---
+
+🌐 MAIN SCREENS & FLOW:
+
+1. **Welcome/Splash Screen**
+   - Animated barber pole spinning in the center
+   - App logo and slogan with fade-in effect
+   - “Start” button with transition to login
+
+2. **Login & Sign-Up**
+   - Two tabs (toggle between Login and Register)
+   - Input fields with icons (email, password)
+   - Social login buttons: Google, Apple, Facebook
+   - Buttons with hover and ripple effect
+   - Links: “Forgot password”, “Terms & Conditions”
+
+3. **Customer Dashboard**
+   - Welcome header with user’s name
+   - Cards:
+     - Next appointment (date, time, barber)
+     - Recommended services
+     - Rate your last visit
+   - Floating red “+ Schedule” button
+   - Notification bell (🔔) with animation
+
+4. **Service Catalog**
+   - Grid of service cards (cut, beard, combo, etc.)
+   - Filter buttons
+   - Each card has icon, name, price, duration
+   - “Details” button opens modal with service info
+
+5. **Scheduling Flow**
+   - Step 1: Select a service (card click animation)
+   - Step 2: Select a barber (horizontal cards)
+   - Step 3: Select a date (calendar UI with hover effects)
+   - Step 4: Select time (rounded buttons)
+   - Step 5: Confirm appointment → show success toast
+
+6. **Customer Profile**
+   - Avatar + edit profile button
+   - Preferences (favorite services and barbers)
+   - Appointment history (timeline style)
+   - “Logout” button → confirmation modal
+
+7. **Barber Dashboard**
+   - Sidebar layout with icons
+   - Cards showing next clients
+   - Interactive calendar
+   - Customer reviews with scroll animations
+   - “Start service” button for each appointment
+
+8. **Admin Panel**
+   - Dashboard with animated charts (Recharts or Chart.js)
+   - Tabs:
+     - Staff
+     - Services
+     - Promotions
+     - Clients
+     - Earnings
+   - Floating buttons to add/edit/delete with modals
+
+---
+
+🧩 UI COMPONENTS TO INCLUDE:
+
+- Button (primary, secondary, ghost)
+- Input fields with icons
+- Cards (animated hover and shadow)
+- Modals (with fade and scale)
+- Calendar component
+- Timeline list (for appointment history)
+- Toast notifications (slide in/out)
+- Sidebar navigation
+- Tab navigation (Login/Register, Admin)
+- Search bar (in Service Catalog)
+- User avatar with dropdown
+
+---
+
+🎯 USER FLOW:
+
+Splash screen  
+→ Login/Register  
+→ Dashboard  
+→ Service selection → Barber selection → Date/Time  
+→ Confirm → Notification  
+→ Profile / History  
+→ Admin or Barber view if user role applies
+
+---
+
+📱 RESPONSIVE DESIGN:
+
+- Mobile-first layout  
+- Fixed bottom navigation bar for mobile  
+- Sidebar for desktop/tablet  
+- Adapt calendar and cards for smaller screens  
+- All actions accessible via touch (big buttons)
+
+---
+
+🔄 ANIMATIONS:
+
+- Barber pole animation in splash and loader
+- Smooth transitions between pages (Framer Motion)
+- Card hover scale + shadow
+- Modals: fade in + zoom
+- Scroll reveal for reviews and cards
+- Button ripple on click
+- Toast notifications: slide from right
+
+---
+
+🧱 COMPONENT ARCHITECTURE (suggested):
+
+- `/components` → UI components (Button, Card, Input, Modal, etc.)
+- `/pages` → Screens (LoginPage, DashboardPage, etc.)
+- `/routes` → React Router setup
+- `/hooks` → Custom hooks (useAuth, useSchedule, etc.)
+- `/contexts` → Context providers (AuthContext, BookingContext)
+- `/assets` → Barber pole logo, icons, etc.
+- `/styles` → Global styles and theme
+
+---
+
+Build this complete front-end with clean structure and visual fidelity as described above. You can scaffold the project and generate each screen and component step by step with this design and flow in mind.
+
+This project is called **BarberPro** – make sure the brand name is visually used in logo, headers, and relevant UI elements.
