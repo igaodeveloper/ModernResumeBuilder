@@ -1,0 +1,177 @@
+You are a senior front-end developer. Build the entire front-end for a modern, robust, professional, and complete barbershop scheduling system called **BarberPro**, using **React.js** (SPA with React Router). This project must deliver a premium UI/UX with elegant visuals, responsive layout, complete component architecture, and advanced animations.
+
+The platform should reflect the classic **barber pole** theme with a modern tech design. Use the barber pole color scheme: red, blue, and white. Make it attractive, smooth, and highly interactive for both clients and barbers.
+
+---
+
+🔷 GENERAL INFORMATION:
+
+- Name: **BarberPro**  
+- Slogan: "Easy scheduling, perfect haircut."  
+- Framework: React.js (SPA)  
+- Style: Tailwind CSS or Styled Components  
+- Font: Poppins or Montserrat  
+- Icons: Heroicons or Phosphor Icons  
+- Animations: Framer Motion or React Spring  
+- Routing: React Router DOM  
+- Responsive: Fully mobile-first and adaptive
+
+---
+
+🎨 COLOR PALETTE:
+
+- Barber Blue: `#1B3D6D`  
+- Barber Red: `#C62828`  
+- Accent Blue: `#2196F3`  
+- Accent Red: `#E53935`  
+- Background White: `#FAFAFA`  
+- Dark Text: `#212121`  
+
+Use rounded corners, soft shadows, spacing, hover effects, and animations on interactions.
+
+---
+
+🌐 MAIN SCREENS & FLOWS:
+
+1. **Splash / Welcome Screen**  
+   - Animated 3D spinning barber pole  
+   - Brand logo and slogan with fade-in effect  
+   - "Start" button → Transition to login
+
+2. **Login / Register**  
+   - Tabs to switch between login and registration  
+   - Email and password fields with icons  
+   - Social logins (Google, Apple, Facebook)  
+   - Ripple and hover animations on buttons  
+   - Links: "Forgot password" and "Terms of Service"
+
+3. **Customer Dashboard**  
+   - Welcome message with user’s name  
+   - Cards:  
+     - Upcoming appointment (date, time, barber)  
+     - Recommended services  
+     - Rate your last visit  
+   - Notification bell icon with animation  
+   - Floating red “+ Schedule” button
+
+4. **Service Catalog**  
+   - Grid of cards showing service name, icon, price  
+   - Filter buttons (service type, popularity)  
+   - "Details" button opening modal with more info
+
+5. **Appointment Flow**  
+   - Step 1: Select service (animated card click)  
+   - Step 2: Select barber (horizontal carousel with photo and rating)  
+   - Step 3: Select date (calendar with hover effect)  
+   - Step 4: Select time (rounded buttons)  
+   - Step 5: Confirm → Show success toast
+
+6. **WhatsApp Booking (Optional Flow)**  
+   - Floating WhatsApp button on all service and dashboard pages  
+   - Clicking opens pre-filled WhatsApp message:  
+     `https://wa.me/5511999999999?text=Hello! I’d like to book a haircut at BarberPro.`  
+   - Message includes service, customer name, and selected time (if available)  
+   - Button shows WhatsApp icon with tooltip: “Schedule via WhatsApp”  
+   - No login required for this feature
+
+7. **Payment via WhatsApp with QR Code (NEW)**  
+   - After confirming appointment, offer “Pay via WhatsApp” option  
+   - On selecting:  
+     - Opens WhatsApp Web or App with pre-filled message:  
+       `"Hi! I'd like to confirm my booking and receive the payment QR Code."`  
+     - Sends a dynamically generated Pix QR Code (image or link) via WhatsApp backend (not front-end logic)  
+   - Clean confirmation payment modal  
+   - Visual hint: “Secure payment via Pix QR Code on WhatsApp”
+
+8. **User Profile**  
+   - Avatar with edit button  
+   - Favorite services and barbers  
+   - Appointment history timeline  
+   - “Logout” button with confirmation modal
+
+9. **Barber Dashboard**  
+   - Sidebar menu with icons  
+   - Cards with today’s appointments  
+   - Interactive calendar view  
+   - Reviews section with scroll animation  
+   - “Start service” button
+
+10. **Admin Dashboard**  
+    - Animated charts (Recharts or Chart.js)  
+    - Sections:  
+      - Staff  
+      - Services  
+      - Promotions  
+      - Clients  
+      - Finances  
+    - Floating action buttons for add/edit/delete with modals
+
+---
+
+🧩 UI COMPONENTS:
+
+- Buttons (primary, secondary, floating)  
+- Inputs with icons and validation  
+- Animated cards (services, appointments)  
+- Modals with fade/scale transitions  
+- Date picker calendar  
+- Horizontal barber selector carousel  
+- Toast notifications  
+- Sidebar navigation (admin/barber)  
+- Bottom mobile nav  
+- QR Code preview section  
+- Floating WhatsApp button with tooltip
+
+---
+
+📲 RESPONSIVE DESIGN:
+
+- Mobile-first with flexible grids  
+- Bottom navigation bar on mobile, sidebar on desktop  
+- Calendar switches to horizontal scroll on mobile  
+- Large touch-friendly buttons  
+- QR Code preview and WhatsApp button adapted for mobile
+
+---
+
+🔄 ANIMATIONS:
+
+- Spinning barber pole on splash screen  
+- Smooth transitions between pages (Framer Motion)  
+- Ripple effect on buttons  
+- Hover animations on cards and buttons  
+- Scroll reveal for testimonials and reviews  
+- Slide-in notifications  
+- Fade reveal of QR Code
+
+---
+
+🧱 SUGGESTED PROJECT STRUCTURE:
+
+- `/components`: Reusable components  
+- `/pages`: Screens (Splash, Login, Dashboard, Admin, etc.)  
+- `/routes`: Routing setup  
+- `/contexts`: Context providers (Auth, Booking)  
+- `/assets`: Icons, logos, QR Code images  
+- `/hooks`: Custom hooks  
+- `/styles`: Global styles and theme
+
+---
+
+🧠 USER FLOW SUMMARY:
+
+Splash  
+→ Login/Register or WhatsApp  
+→ Dashboard  
+→ Choose service → barber → date → time  
+→ Confirm  
+→ Choose payment: pay later / pay via WhatsApp  
+→ WhatsApp opens with message + Pix QR Code  
+→ Payment confirmed → Notification  
+→ History and booking management
+
+---
+
+Build the full front-end with high fidelity to this layout, including all screens, components, animations, and WhatsApp + QR Code payment functionalities.
+
+The brand name is **BarberPro** and must appear on logos, headers, and key elements. Maintain high-quality professional polish.

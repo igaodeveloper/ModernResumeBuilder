@@ -270,6 +270,8 @@ export class MemStorage implements IStorage {
     const user: User = {
       ...insertUser,
       id: this.currentUserId++,
+      role: insertUser.role || "customer",
+      profileImageUrl: insertUser.profileImageUrl || null,
       createdAt: new Date(),
     };
     this.users.set(user.id, user);
@@ -294,7 +296,7 @@ export class MemStorage implements IStorage {
   // Barber operations
   async getAllBarbers(): Promise<BarberWithUser[]> {
     const barbersWithUsers: BarberWithUser[] = [];
-    for (const barber of this.barbers.values()) {
+    for (const barber of Array.from(this.barbers.values())) {
       const user = this.users.get(barber.userId);
       if (user && barber.isAvailable) {
         barbersWithUsers.push({ ...barber, user });
@@ -318,6 +320,8 @@ export class MemStorage implements IStorage {
     const appointment: Appointment = {
       ...insertAppointment,
       id: this.currentAppointmentId++,
+      status: insertAppointment.status || "scheduled",
+      notes: insertAppointment.notes || null,
       createdAt: new Date(),
     };
     this.appointments.set(appointment.id, appointment);
@@ -327,7 +331,7 @@ export class MemStorage implements IStorage {
   async getUserAppointments(userId: number): Promise<AppointmentWithDetails[]> {
     const appointmentsWithDetails: AppointmentWithDetails[] = [];
     
-    for (const appointment of this.appointments.values()) {
+    for (const appointment of Array.from(this.appointments.values())) {
       if (appointment.customerId === userId) {
         const customer = this.users.get(appointment.customerId);
         const barber = await this.getBarber(appointment.barberId);
@@ -352,7 +356,7 @@ export class MemStorage implements IStorage {
   async getBarberAppointments(barberId: number, date?: Date): Promise<AppointmentWithDetails[]> {
     const appointmentsWithDetails: AppointmentWithDetails[] = [];
     
-    for (const appointment of this.appointments.values()) {
+    for (const appointment of Array.from(this.appointments.values())) {
       if (appointment.barberId === barberId) {
         if (date) {
           const appointmentDate = new Date(appointment.appointmentDate);
@@ -395,6 +399,7 @@ export class MemStorage implements IStorage {
     const review: Review = {
       ...insertReview,
       id: this.currentReviewId++,
+      comment: insertReview.comment || null,
       createdAt: new Date(),
     };
     this.reviews.set(review.id, review);
@@ -408,7 +413,7 @@ export class MemStorage implements IStorage {
   async getBarberReviews(barberId: number): Promise<ReviewWithDetails[]> {
     const reviewsWithDetails: ReviewWithDetails[] = [];
     
-    for (const review of this.reviews.values()) {
+    for (const review of Array.from(this.reviews.values())) {
       if (review.barberId === barberId) {
         const customer = this.users.get(review.customerId);
         const barber = await this.getBarber(review.barberId);
