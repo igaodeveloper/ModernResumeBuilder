@@ -6,14 +6,14 @@ import type {
 } from '@shared/schema';
 import type { IStorage } from './storage';
 import * as fs from 'fs';
-const path = require('path');
+import path from 'path';
 
 const serviceAccountPath = path.join(__dirname, 'credentials', 'serviceAccountKey.json');
 if (!fs.existsSync(serviceAccountPath)) {
   throw new Error('Arquivo de credenciais do Firebase não encontrado: ' + serviceAccountPath);
 }
 
-const serviceAccount = require(serviceAccountPath);
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf-8'));
 
 let app: App;
 if (!getApps().length) {
