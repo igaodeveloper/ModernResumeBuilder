@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
+import { QRPaymentModal } from "@/components/ui/qr-payment-modal";
 import { useToast } from "@/hooks/use-toast";
 import { ChevronLeft, ChevronRight, Clock, Check } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -34,6 +35,7 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
   const [selectedBarber, setSelectedBarber] = useState<BarberWithUser | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   
   const { user } = useAuth();
   const { toast } = useToast();
@@ -53,11 +55,7 @@ export default function Schedule({ selectedServiceId, onSuccess }: ScheduleProps
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`/api/users/${user?.id}/appointments`] });
-      toast({
-        title: "Appointment booked!",
-        description: "Your appointment has been successfully scheduled.",
-      });
-      onSuccess();
+      setShowPaymentModal(true);
     },
     onError: () => {
       toast({

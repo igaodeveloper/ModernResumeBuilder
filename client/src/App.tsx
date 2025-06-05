@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BarberPole } from "@/components/ui/barber-pole";
 import { FloatingActionButton } from "@/components/ui/floating-action-button";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/useAuth";
@@ -133,7 +134,7 @@ function Navigation() {
 function Router() {
   const [appState, setAppState] = useState<AppState>("splash");
   const [selectedServiceId, setSelectedServiceId] = useState<number | undefined>();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [, setLocation] = useLocation();
 
   useEffect(() => {
@@ -201,6 +202,11 @@ function Router() {
       >
         <Plus className="w-8 h-8" />
       </FloatingActionButton>
+
+      {/* WhatsApp Button */}
+      <WhatsAppButton 
+        customerName={user ? `${user.firstName} ${user.lastName}` : ""}
+      />
     </div>
   );
 }
